@@ -1,9 +1,16 @@
 package cz.inventi.kpj.kpjtesting;
 
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
- *
  * 1. Create Spring Boot Test (Integration test with the application context
  * loading) <br/>
  * 2. Provide mock instance of {@link HelloWorldService} <br/>
@@ -15,36 +22,41 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 3.2. Assert the {@link KpjTesting#printEcho(String)} returns "KPJ echo"<br/>
  */
 
+@SpringBootTest
 class KpjTestingApplicationTests {
 
+    @MockBean
+    HelloWorldService helloWorldService;
 
-  HelloWorldService helloWorldService;
+    @Autowired
+    KpjTesting kpjTesting;
 
-  @Autowired
-  KpjTesting kpjTesting;
+    @Test
+    void testHelloWorld() {
+        // given
+        // Setup mock
+        when(helloWorldService.helloWorld()).thenReturn("Hello World");
+        // when
+        kpjTesting.printHelloWorld();
 
-  void testHelloWorld() {
-    // given
-    // Setup mock
+        // then
+        verify(helloWorldService).helloWorld();
+        // Verify the HelloWorldService#helloWorld() was called
 
-    // when
-    kpjTesting.printHelloWorld();
+    }
 
-    // then
-    // Verify the HelloWorldService#helloWorld() was called
+    @Test
+    void testPrintEcho() {
+        // given
+        // setup mock
+        when(helloWorldService.echo(anyString())).thenReturn("KPJ echo");
+        // when
+        String result = kpjTesting.printEcho("KPJ echo");
 
-  }
+        // then
+        assertEquals("KPJ echo", result);
+        // Add assert the result is equals to "KPJ echo"
 
-  void testPrintEcho() {
-    // given
-    // setup mock
-
-    // when
-    String result = kpjTesting.printEcho("KPJ echo");
-
-    // then
-    // Add assert the result is equals to "KPJ echo"
-
-  }
+    }
 
 }
