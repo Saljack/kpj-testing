@@ -1,6 +1,15 @@
 package cz.inventi.kpj.kpjtesting;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 /**
  *
@@ -15,34 +24,44 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 3.2. Assert the {@link KpjTesting#printEcho(String)} returns "KPJ echo"<br/>
  */
 
+@SpringBootTest()
 class KpjTestingApplicationTests {
 
-
+  @MockBean
   HelloWorldService helloWorldService;
 
   @Autowired
   KpjTesting kpjTesting;
 
+  @Autowired
+  KpjTestingApplication kpjTestingApplication;
+
+  @Test
   void testHelloWorld() {
     // given
+    when(helloWorldService.helloWorld()).thenReturn("Hello World");
     // Setup mock
 
     // when
-    kpjTesting.printHelloWorld();
+   kpjTesting.printHelloWorld();
 
     // then
+    verify(helloWorldService, times(1)).helloWorld();
     // Verify the HelloWorldService#helloWorld() was called
 
   }
 
+  @Test
   void testPrintEcho() {
     // given
+    when(helloWorldService.echo(anyString())).thenReturn("KPJ echo");
     // setup mock
 
     // when
     String result = kpjTesting.printEcho("KPJ echo");
 
     // then
+    assertEquals("KPJ echo", result);
     // Add assert the result is equals to "KPJ echo"
 
   }
