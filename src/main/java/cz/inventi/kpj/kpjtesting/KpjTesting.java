@@ -1,6 +1,6 @@
 package cz.inventi.kpj.kpjtesting;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
