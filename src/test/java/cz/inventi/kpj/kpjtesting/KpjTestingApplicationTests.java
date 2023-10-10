@@ -1,8 +1,6 @@
 package cz.inventi.kpj.kpjtesting;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -45,7 +43,6 @@ class KpjTestingApplicationTests {
     // then
     // Verify the HelloWorldService#helloWorld() was called
     verify(helloWorldService,times(1)).helloWorld();
-
   }
 
   @Test
@@ -60,7 +57,6 @@ class KpjTestingApplicationTests {
     // then
     // Add assert the result is equals to "KPJ echo"
     assertEquals("KPJ echo", result);
-
   }
 
 }

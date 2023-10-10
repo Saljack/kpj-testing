@@ -1,7 +1,14 @@
 package cz.inventi.kpj.kpjtesting;
 
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
 /**
  * 1. Create Spy on the {@link KpjTesting#helloWorldService} field <br/>
@@ -11,22 +18,28 @@ import org.mockito.quality.Strictness;
  * returns "KPJ Rulez" <br/>
  */
 @MockitoSettings(strictness = Strictness.LENIENT)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class KpjTestingTest {
 
-
+  @Spy
   HelloWorldService helloWorldService = new HelloWorldServiceImpl();
 
-
+  @InjectMocks
   KpjTesting kpjTesting;
 
-  void setUp() {
+
+  @BeforeEach
+    void setUp() {
     // setup mocks for all tests
     // hint you have to use doReturn for Spy
     // Change behavior of HelloWorldServiceImpl#echo(String)
     // to always returns "KPJ Rulez"
 
+    String arg = "KPJ Rulez";
+    doReturn(arg).when(helloWorldService).echo(anyString());
   }
 
+  @Test
   void testPrintHelloWorld() {
     // no given
     // when
@@ -34,9 +47,10 @@ public class KpjTestingTest {
 
     // then
     // verify the HelloWorldServiceImpl#helloWorld() is called
-
+    verify(helloWorldService, atLeastOnce()).helloWorld();
   }
 
+  @Test
   void testPrintEcho() {
     // no given
     // when
@@ -44,7 +58,7 @@ public class KpjTestingTest {
 
     // then
     // add assert the result equals "KPJ Rulez"
-
+    assertEquals("KPJ Rulez", result);
   }
 
   static class HelloWorldServiceImpl implements HelloWorldService {
