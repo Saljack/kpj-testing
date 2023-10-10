@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class KpjTesting {
-
   private final HelloWorldService helloWorldService;
 
   @PostConstruct
