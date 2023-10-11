@@ -19,7 +19,6 @@ import static org.mockito.Mockito.*;
  * 4. Change behavior of {@link HelloWorldServiceImpl#echo(String)} to always
  * returns "KPJ Rulez" <br/>
  */
-@SpringBootTest
 @MockitoSettings(strictness = Strictness.LENIENT)
 public class KpjTestingTest {
   @Spy
