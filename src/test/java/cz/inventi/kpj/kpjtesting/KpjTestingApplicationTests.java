@@ -40,8 +40,8 @@ class KpjTestingApplicationTests {
 
     // then
     // Verify the HelloWorldService#helloWorld() was called
-    verify(helloWorldService.helloWorld(), times(1));
-  }
+  verify(helloWorldService, times(1)).helloWorld();
+}
 @Test
   void testPrintEcho() {
     // given

@@ -32,7 +32,7 @@ public class KpjTestingTest {
   void setUp() {
     // Change behavior of HelloWorldServiceImpl#echo(String)
     // to always return "KPJ Rulez"
-    doReturn("KPJ Rulez").when(helloWorldService.echo("Print ECHO"));
+    doReturn("KPJ Rulez").when(helloWorldService).echo(anyString());
   }
 @Test
   void testPrintHelloWorld() {
@@ -42,7 +42,7 @@ public class KpjTestingTest {
 
     // then
     // verify the HelloWorldServiceImpl#helloWorld() is called
-  verify(helloWorldService.helloWorld(), times(1));
+  verify(helloWorldService, times(1)).helloWorld();
   }
 @Test
   void testPrintEcho() {
