@@ -1,10 +1,7 @@
 package cz.inventi.kpj.kpjtesting;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,23 +23,19 @@ import static org.mockito.Mockito.*;
  */
 
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
 class KpjTestingApplicationTests {
 
-  @MockBean
-  HelloWorldService helloWorldService;
+    @MockBean
+    HelloWorldService helloWorldService;
 
-  @Autowired
-  KpjTesting kpjTesting;
+    @Autowired
+    KpjTesting kpjTesting;
 
-
- @Test
- void testHelloWorld() {
+    @Test
+    void testHelloWorld() {
     // given
-    // Setup mock
-   helloWorldService = Mockito.mock(HelloWorldService.class);
-   kpjTesting = new KpjTesting(helloWorldService);
-   when(helloWorldService.helloWorld()).thenReturn("Hello World");
+    // Setup mocK
+        when(helloWorldService.helloWorld()).thenReturn("Hello World");
 
     // when
     kpjTesting.printHelloWorld();
@@ -56,9 +49,7 @@ class KpjTestingApplicationTests {
   void testPrintEcho() {
     // given
     // setup mock
-    helloWorldService = Mockito.mock(HelloWorldService.class);
-    kpjTesting = new KpjTesting(helloWorldService);
-    when(helloWorldService.echo("KPJ echo")).thenReturn("KPJ echo");
+      when(helloWorldService.echo("KPJ echo")).thenReturn("KPJ echo");
 
     // when
     String result = kpjTesting.printEcho("KPJ echo");

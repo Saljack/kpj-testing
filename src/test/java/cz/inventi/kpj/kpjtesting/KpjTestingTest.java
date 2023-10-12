@@ -2,10 +2,13 @@ package cz.inventi.kpj.kpjtesting;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.springframework.context.annotation.Bean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -23,7 +26,7 @@ public class KpjTestingTest {
   @Spy
   HelloWorldService helloWorldService = new HelloWorldServiceImpl();
 
-
+  @InjectMocks
   KpjTesting kpjTesting;
 
   @BeforeEach
@@ -32,16 +35,13 @@ public class KpjTestingTest {
     // hint you have to use doReturn for Spy
     // Change behavior of HelloWorldServiceImpl#echo(String)
     // to always returns "KPJ Rulez"
-    helloWorldService = Mockito.mock(HelloWorldService.class);
-    kpjTesting = new KpjTesting(helloWorldService);
-
+    when(helloWorldService.echo(Mockito.anyString())).thenReturn("KPJ Rulez");
   }
 
   @Test
   void testPrintHelloWorld() {
     // no given
     // when
-    when(helloWorldService.helloWorld()).thenReturn("Hello World");
     kpjTesting.printHelloWorld();
 
     // then
@@ -54,7 +54,6 @@ public class KpjTestingTest {
   void testPrintEcho() {
     // no given
     // when
-    when(helloWorldService.echo("Print ECHO")).thenReturn("KPJ Rulez");
     String result = kpjTesting.printEcho("Print ECHO");
 
     // then
